@@ -70,11 +70,11 @@ DB_ROOT_PASSWORD=YourPasswordHere`
 > 
 > DB_USER=root
 > 
-> DB_ROOT_PASSWORD=YourPasswordHere
+> DB_ROOT_PASSWORD=DBPASSWORDHERE
 
 ## Database Setup
 
-To correctly configure the MySQL database, open the file `LyricalProject/Lyrical-Backend/init-mysql.sql` and update the password for the root user with your `DB_ROOT_PASSWORD`.
+To correctly configure the MySQL database, open the file `Lyrical/Lyrical-Backend/init-mysql.sql` and update the password for the root user with your `DB_ROOT_PASSWORD`.
 
 Replace `YOUR_DB_PASSWORD_HERE` with the actual password in the following SQL command:
 
@@ -88,7 +88,7 @@ Once your environment variables and database configuration are set up:
 
 1.  Go to the base directory of the project:
        
-    `cd LyricalProject` 
+    `cd Lyrical` 
     
 2.  Run the project using Docker Compose:
     
