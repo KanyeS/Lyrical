@@ -1,0 +1,61 @@
+services:
+  frontend:
+    build:
+      context: ./LyricalFrontEnd/Lyrical-react
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_BASE_URL=${VITE_API_BASE_URL}
+    depends_on:
+      - backend_node
+
+  backend_node:
+    build:
+      context: ./Lyrical-Backend
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - JWT_SECRET_KEY=${SECRET_KEY}
+      - FLASK_API_URL=http://backend_flask:5000
+      - ALLOWED_ORIGIN=${NODE_ALLOWED_ORIGIN}
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=${DB_ROOT_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    volumes:
+      - .:/app
+    depends_on:
+      - backend_flask
+      - db
+
+  backend_flask:
+    build:
+      context: ./Lyrical
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - JWT_SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_ORIGIN=${FLASK_ALLOWED_ORIGIN}
+    volumes:
+      - .:/app
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./Lyrical-Backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db_data:

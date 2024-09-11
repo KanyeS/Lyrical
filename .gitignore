@@ -1,0 +1,5 @@
+*.whl
+*.env
+./LyricalFrontEnd/Lyrical-react/node_modules
+./Lyrical/__pycache__
+./Lyrical-Backend/node_modules
